@@ -1,4 +1,5 @@
 ﻿using CarvedRock.API.Models;
+using CarvedRock.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,13 +13,16 @@ namespace CarvedRock.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private readonly IProductRepository repo;
+
+        public ProductController(IProductRepository repo)
+        {
+            this.repo = repo;
+        }
         [HttpGet]
         public IActionResult Get()
         {
-            var products = new List<Product>()
-            { new Product() { Id = 1, Name = "Product 1" } };
-
-            return Ok(products);
+            return Ok(repo.GetAllProducts());
         }
     }
 }
