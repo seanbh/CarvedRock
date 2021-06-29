@@ -2,6 +2,7 @@
 using CarvedRock.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,17 @@ namespace CarvedRock.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository repo;
+		private readonly ILogger<ProductController> logger;
 
-        public ProductController(IProductRepository repo)
+		public ProductController(IProductRepository repo, ILogger<ProductController> logger)
         {
             this.repo = repo;
-        }
+			this.logger = logger;
+		}
         [HttpGet]
         public IActionResult Get()
         {
+            logger.LogInformation("GetProducts called");
             return Ok(repo.GetAllProducts());
         }
     }
