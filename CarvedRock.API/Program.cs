@@ -22,6 +22,7 @@ namespace CarvedRock.API
 				.Enrich.WithMachineName()
 				.Enrich.WithProperty("Assembly", name) 
 				.WriteTo.Console()
+				.WriteTo.Seq(serverUrl: "http://host.docker.internal:5341")
 				//.WriteTo.File("logs/myapp.txt", rollingInterval: RollingInterval.Day)
 				.CreateLogger();
 
