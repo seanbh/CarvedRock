@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,16 @@ namespace CarvedRock.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarvedRock.API", Version = "v1" });
             });
+
+            var connString = Configuration.GetConnectionString("Default");
+            var simpleProperty = Configuration.GetValue<string>("SimpleProperty");
+            var nestedProperty = Configuration.GetValue<string>("Inventory:NestedProperty");
+
+            Log
+                .ForContext("ConnString", connString)
+                .ForContext("SimpleProperty", simpleProperty)
+                .ForContext("NestedProperty", nestedProperty)
+                .Information("Config loaded");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
