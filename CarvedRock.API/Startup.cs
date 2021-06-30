@@ -45,6 +45,9 @@ namespace CarvedRock.API
                 .ForContext("SimpleProperty", simpleProperty)
                 .ForContext("NestedProperty", nestedProperty)
                 .Information("Config loaded");
+
+            var dbView = (Configuration as IConfigurationRoot).GetDebugView();
+            Log.ForContext("AllConfig", dbView).Information("All Config");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
