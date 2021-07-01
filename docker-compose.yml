@@ -1,6 +1,14 @@
 version: '3.4'
 
 services:
+  carvedrock.app:
+    image: ${DOCKER_REGISTRY-}carvedrockapp
+    build:
+      context: .
+      dockerfile: CarvedRock.App/Dockerfile
+    ports:
+      - "8021:80"
+
   carvedrock.api:
     image: ${DOCKER_REGISTRY-}carvedrockapi
     build:
@@ -19,3 +27,6 @@ services:
       - "8005:80"
     environment:
       - ACCEPT_EULA=Y
+
+  
+
