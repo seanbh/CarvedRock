@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -40,8 +41,7 @@ namespace CarvedRock.App.Controllers
 		{
 			var products = new List<Product>() { new Product() { Id = 1, Name = "Test 1" } };
 			var client = new HttpClient();
-			var streamTask = client.GetStreamAsync("http://carvedrock.api/api/product");
-			products = await JsonSerializer.DeserializeAsync<List<Product>>(await streamTask);
+			products = await client.GetFromJsonAsync<List<Product>>("http://carvedrock.api/api/product");
 			return View("Index", products);
 		}
 	}
