@@ -1,4 +1,5 @@
 ﻿using CarvedRock.App.Models;
+using CarvedRock.App.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,11 +16,13 @@ namespace CarvedRock.App.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
+        private readonly ICarvedRockApiClient apiClient;
 
-		public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICarvedRockApiClient apiClient)
 		{
 			_logger = logger;
-		}
+            this.apiClient = apiClient;
+        }
 
 		public IActionResult Index()
 		{
@@ -41,7 +44,7 @@ namespace CarvedRock.App.Controllers
 		{
 			var products = new List<Product>() { new Product() { Id = 1, Name = "Test 1" } };
 			var client = new HttpClient();
-			products = await client.GetFromJsonAsync<List<Product>>("http://carvedrock.api/api/product");
+			products = await apiClient.GetProducts();
 			return View("Index", products);
 		}
 	}
